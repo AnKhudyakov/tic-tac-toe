@@ -9,6 +9,7 @@ function App() {
   const [messages, setMessages] = useState("");
   const [connected, setConnected] = useState(false);
   const [socket, setSocket] = useState(null);
+  const [canStart, setCanStart] = useState(false);
   const handleConnect = () => {
     setInfo("");
     if (name.length) {
@@ -25,12 +26,21 @@ function App() {
         socket.send(JSON.stringify(message));
       };
       socket.onmessage = (ev) => {
-        const message = JSON.parse(ev.data);
-        if (message.event === "info") {
-          setInfo(message.content);
-          setConnected(false);
-        } else {
-          setMessages(message);
+        const msg = JSON.parse(ev.data);
+        switch (msg.event) {
+          case "message":
+            setMessages(msg);
+            break;
+          case "info":
+            setInfo(msg.content);
+            setConnected(false);
+            break;
+          case "canStart":
+            setCanStart(true);
+            break;
+          case "opponentLeave":
+            setCanStart(false);
+            break;
         }
       };
       socket.onclose = () => {
@@ -54,6 +64,7 @@ function App() {
           socket={socket}
           setConnected={setConnected}
           setMessages={setMessages}
+          canStart={canStart}
         />
       ) : (
         <div className=" my-4 flex items-center">

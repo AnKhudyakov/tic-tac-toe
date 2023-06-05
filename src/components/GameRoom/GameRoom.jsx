@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Board from "../Board/Board";
 
-const GameRoom = ({ socket, name, setConnected, ...props }) => {
+const GameRoom = ({ socket, name, setConnected, canStart, ...props }) => {
   const handleExit = () => {
-    socket.close();
+    socket.close(1000,`${name}`);
     setConnected(false);
   };
   return (
@@ -14,7 +14,9 @@ const GameRoom = ({ socket, name, setConnected, ...props }) => {
           Exit
         </button>
       </div>
-      <Board socket={socket} name={name} {...props} />
+      {canStart? <Board socket={socket} name={name} {...props} />:
+      <div>Please wait for your opponent...</div>
+      }
     </main>
   );
 };
