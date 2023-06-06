@@ -6,6 +6,7 @@ const GameRoom = ({
   name,
   setConnected,
   canStart,
+  setCanStart,
   setRestart,
   ...props
 }) => {
@@ -13,6 +14,7 @@ const GameRoom = ({
     socket.close(1000, `${name}`);
     setConnected(false);
     setRestart(true);
+    setCanStart(false)
   };
   return (
     <main>
@@ -23,7 +25,7 @@ const GameRoom = ({
         </button>
       </div>
       {canStart ? (
-        <Board socket={socket} name={name} {...props} />
+        <Board socket={socket} name={name} setCanStart={setCanStart} {...props} setRestart={setRestart}/>
       ) : (
         <div>Please wait for your opponent...</div>
       )}

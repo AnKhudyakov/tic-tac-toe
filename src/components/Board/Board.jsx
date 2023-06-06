@@ -10,6 +10,7 @@ const Board = ({
   setMessages,
   setCanStart,
   restart,
+  setRestart
 }) => {
   const [board, setBoard] = useState(cells);
   const [player, setPlayer] = useState("X");
@@ -32,7 +33,7 @@ const Board = ({
   };
 
   useEffect(() => {
-    console.log("MSG GOT");
+    //console.log("MSG GOT");
     const newMove = messages.id;
     if (messages.type === "X") {
       setPlayer("O");
@@ -62,7 +63,7 @@ const Board = ({
       setCanPlay(true);
     }
   }, [restart]);
-
+console.log("restart",restart);
   return (
     <section className="main-section">
       <h2 className="text-center">New game</h2>
@@ -86,8 +87,13 @@ const Board = ({
         </div>
       ) : (
         <div className="text-center">
-          <div> Game over! <br /> {end.winner ? `Winner:${end.winner}` : "Tie!"}{" "}</div>
-          <button className="btn btn-primary">Restart</button>
+          <div>
+            {" "}
+            Game over! <br /> {end.winner
+              ? `Winner:${end.winner}`
+              : "Tie!"}{" "}
+          </div>
+          <button className="btn btn-primary" onClick={()=>{setRestart(!restart);setEnd("")}}>New Game</button>
         </div>
       )}
     </section>

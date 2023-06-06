@@ -27,7 +27,7 @@ function App() {
         socket.send(JSON.stringify(message));
       };
       socket.onmessage = (ev) => {
-        console.log("event");
+       // console.log("event");
         const msg = JSON.parse(ev.data);
         switch (msg.event) {
           case "message":
@@ -57,7 +57,7 @@ function App() {
       alert("Please enter name");
     }
   };
-  console.log("MSG", messages);
+ // console.log("MSG", messages);
   return (
     <div className="container mx-auto d-flex items-center justify-content-center flex-col">
       {connected ? (

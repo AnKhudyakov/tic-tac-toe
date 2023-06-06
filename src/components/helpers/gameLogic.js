@@ -30,7 +30,6 @@ export const checkWin = (board) => {
 };
 
 export const checkTie = (board) => {
-  console.log(board);
   let filled = true;
   for (let cell in board) {
     if (board[cell] == "") {
