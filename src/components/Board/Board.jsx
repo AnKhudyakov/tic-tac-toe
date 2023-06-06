@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Cell from "../Cell/Cell";
 import { checkWin, checkTie, cells } from "../helpers/gameLogic";
-
+import { Box } from "@mui/material";
 const Board = ({
   messages,
   name,
@@ -69,21 +69,21 @@ console.log("restart",restart);
       <h2 className="text-center">New game</h2>
       {!end ? (
         <div>
-          <div className="d-flex">
+          <Box sx={{display:"flex"}}>
             <Cell handleCellClick={handleCellClick} id={"0"} text={board[0]} />
             <Cell handleCellClick={handleCellClick} id={"1"} text={board[1]} />
             <Cell handleCellClick={handleCellClick} id={"2"} text={board[2]} />
-          </div>
-          <div className="d-flex">
+          </Box>
+          <Box sx={{display:"flex"}}>
             <Cell handleCellClick={handleCellClick} id={"3"} text={board[3]} />
             <Cell handleCellClick={handleCellClick} id={"4"} text={board[4]} />
             <Cell handleCellClick={handleCellClick} id={"5"} text={board[5]} />
-          </div>
-          <div className="d-flex">
+          </Box>
+          <Box sx={{display:"flex"}}>
             <Cell handleCellClick={handleCellClick} id={"6"} text={board[6]} />
             <Cell handleCellClick={handleCellClick} id={"7"} text={board[7]} />
             <Cell handleCellClick={handleCellClick} id={"8"} text={board[8]} />
-          </div>
+          </Box>
         </div>
       ) : (
         <div className="text-center">

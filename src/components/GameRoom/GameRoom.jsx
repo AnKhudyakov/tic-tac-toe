@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Board from "../Board/Board";
+import zIndex from "@mui/material/styles/zIndex";
 
 const GameRoom = ({
   socket,
@@ -17,7 +18,7 @@ const GameRoom = ({
     setCanStart(false)
   };
   return (
-    <main>
+    <main style={{zIndex:1}}>
       <div className="d-flex justify-content-between p-3" style={{minWidth:"300px"}}>
         <div> Your name:{name}</div>
         <button className="btn btn-primary" onClick={handleExit}>
