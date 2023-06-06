@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import Cell from "../Cell/Cell";
 import { checkWin, checkTie, cells } from "../helpers/gameLogic";
 
-const Board = ({ messages, name, room, socket, setMessages }) => {
+const Board = ({
+  messages,
+  name,
+  room,
+  socket,
+  setMessages,
+  setCanStart,
+  restart,
+}) => {
   const [board, setBoard] = useState(cells);
   const [player, setPlayer] = useState("X");
   const [canPlay, setCanPlay] = useState(true);
@@ -24,6 +32,7 @@ const Board = ({ messages, name, room, socket, setMessages }) => {
   };
 
   useEffect(() => {
+    console.log("MSG GOT");
     const newMove = messages.id;
     if (messages.type === "X") {
       setPlayer("O");
@@ -42,11 +51,21 @@ const Board = ({ messages, name, room, socket, setMessages }) => {
       setCanPlay(false);
       setEnd(winner ? winner : tie);
       setMessages("");
+      //setCanStart(false);
     }
   }, [board]);
 
+  useEffect(() => {
+    if (restart) {
+      setBoard(cells);
+      setMessages("");
+      setCanPlay(true);
+    }
+  }, [restart]);
+
   return (
     <section className="main-section">
+      <h2 className="text-center">New game</h2>
       {!end ? (
         <div>
           <div className="d-flex">
@@ -66,8 +85,9 @@ const Board = ({ messages, name, room, socket, setMessages }) => {
           </div>
         </div>
       ) : (
-        <div>
-          Game over! <br /> {end.winner ? `Winner:${end.winner}` : "Tie!"}{" "}
+        <div className="text-center">
+          <div> Game over! <br /> {end.winner ? `Winner:${end.winner}` : "Tie!"}{" "}</div>
+          <button className="btn btn-primary">Restart</button>
         </div>
       )}
     </section>

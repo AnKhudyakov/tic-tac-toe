@@ -6,9 +6,10 @@ function App() {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
   const [info, setInfo] = useState("");
+  const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState("");
   const [connected, setConnected] = useState(false);
-  const [socket, setSocket] = useState(null);
+  const [restart, setRestart] = useState(false);
   const [canStart, setCanStart] = useState(false);
   const handleConnect = () => {
     setInfo("");
@@ -26,6 +27,7 @@ function App() {
         socket.send(JSON.stringify(message));
       };
       socket.onmessage = (ev) => {
+        console.log("event");
         const msg = JSON.parse(ev.data);
         switch (msg.event) {
           case "message":
@@ -40,6 +42,7 @@ function App() {
             break;
           case "opponentLeave":
             setCanStart(false);
+            setRestart(true)
             break;
         }
       };
@@ -54,6 +57,7 @@ function App() {
       alert("Please enter name");
     }
   };
+  console.log("MSG", messages);
   return (
     <div className="container mx-auto d-flex items-center justify-content-center flex-col">
       {connected ? (
@@ -65,6 +69,9 @@ function App() {
           setConnected={setConnected}
           setMessages={setMessages}
           canStart={canStart}
+          setCanStart={setCanStart}
+          restart={restart}
+          setRestart={setRestart}
         />
       ) : (
         <div className=" my-4 flex items-center">
