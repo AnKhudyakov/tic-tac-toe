@@ -17,7 +17,7 @@ function App() {
   const [restart, setRestart] = useState(false);
   const [canStart, setCanStart] = useState(false);
   const [toggleTheme, setToggleTheme] = useState(true);
-  // console.log("MSG", messages);
+   console.log("MSG", messages);
   const label = { inputProps: { "aria-label": "Color switch demo" } };
   
   return (

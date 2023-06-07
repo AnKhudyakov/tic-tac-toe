@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Board from "../Board/Board";
-import zIndex from "@mui/material/styles/zIndex";
-
+import { Box, Button, Typography } from "@mui/material";
 const GameRoom = ({
   socket,
   name,
@@ -15,20 +14,51 @@ const GameRoom = ({
     socket.close(1000, `${name}`);
     setConnected(false);
     setRestart(true);
-    setCanStart(false)
+    setCanStart(false);
   };
   return (
-    <main style={{zIndex:1}}>
-      <div className="d-flex justify-content-between p-3" style={{minWidth:"300px"}}>
-        <div> Your name:{name}</div>
-        <button className="btn btn-primary" onClick={handleExit}>
+    <main>
+      <Box
+        sx={{
+          minWidth: "300px",
+          zIndex: 1,
+          color: "white",
+          position: "relative",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography
+          sx={{
+            width: "100%",
+          }}
+        >
+          Your name:{name}
+        </Typography>
+        <Button onClick={handleExit} sx={{ bgcolor: "grey", color: "white" }}>
           Exit
-        </button>
-      </div>
+        </Button>
+      </Box>
       {canStart ? (
-        <Board socket={socket} name={name} setCanStart={setCanStart} {...props} setRestart={setRestart}/>
+        <Board
+          socket={socket}
+          name={name}
+          setCanStart={setCanStart}
+          {...props}
+          setRestart={setRestart}
+        />
       ) : (
-        <div>Please wait for your opponent...</div>
+        <Typography
+          sx={{
+            zIndex: 1,
+            color: "white",
+            position: "relative",
+            py: 4,
+            textAlign: "center",
+          }}
+        >
+          Please wait for your opponent...
+        </Typography>
       )}
     </main>
   );

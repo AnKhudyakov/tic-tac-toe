@@ -18,7 +18,7 @@ export const CustomSwitcher = styled(Switch)(({ checked }) => ({
     },
   },
   "& .MuiSwitch-thumb": {
-    backgroundColor: !checked ? "#8796a5" : "#1976d2",
+    backgroundColor: checked ? "#8796a5" : "#1976d2",
     width: 32,
     height: 32,
     "&:before": {
