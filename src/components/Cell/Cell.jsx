@@ -7,9 +7,11 @@ const Cell = ({
   board,
   plusModel,
   nullModel,
-  emptyModel,
+  toggleTheme,
+  modelEmpty,
 }) => {
-  const [model, setModel] = useState(emptyModel.scene.clone(true));
+  const [model, setModel] = useState(modelEmpty);
+
   useEffect(() => {
     switch (board[coord]) {
       case "O":
@@ -18,15 +20,16 @@ const Cell = ({
       case "X":
         setModel(plusModel.scene.clone(true));
         break;
+      case "":
+        setModel(modelEmpty);
+        break;
     }
-  }, [board]);
+  }, [board, toggleTheme]);
 
   return (
     <primitive
       object={model}
       position={position}
-      //rotation-y={-Math.PI / 4}
-      //rotation-z={-Math.PI / 4}
       children-0-castShadow
       onClick={handleCellClick}
       coord={coord}

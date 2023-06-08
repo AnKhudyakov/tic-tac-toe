@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { grey } from "@mui/material/colors";
-//import styles from "./Form.module.scss";
 import {
   FormControl,
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  Button,
   IconButton,
-  Typography,
   Box,
   keyframes,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import MeetingRoomTwoToneIcon from "@mui/icons-material/MeetingRoomTwoTone";
 import FaceTwoToneIcon from "@mui/icons-material/FaceTwoTone";
 import PlayCircleTwoToneIcon from "@mui/icons-material/PlayCircleTwoTone";
@@ -27,7 +23,6 @@ const Form = ({
   setMessages,
   setCanStart,
   setRestart,
-  toggleTheme,
 }) => {
   const handleConnect = () => {
     setInfo("");
@@ -45,7 +40,6 @@ const Form = ({
         socket.send(JSON.stringify(message));
       };
       socket.onmessage = (ev) => {
-        // console.log("event");
         const msg = JSON.parse(ev.data);
         switch (msg.event) {
           case "message":
@@ -65,14 +59,13 @@ const Form = ({
         }
       };
       socket.onclose = () => {
-        //alert("Connection closed");
         setConnected(false);
       };
       socket.onerror = () => {
-        alert("Connection died");
+        console.log("Connection died");
       };
     } else {
-      alert("Please enter name");
+      console.log("Please enter name");
     }
   };
   const pulsate = keyframes`
@@ -94,7 +87,17 @@ to {
   `;
 
   return (
-    <Box sx={{ width: "25ch" }}>
+    <Box
+      sx={{
+        width: "100%",
+        p: 5,
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <FormControl sx={{ mb: 5, width: "25ch" }} variant="outlined">
         <InputLabel
           htmlFor="outlined-adornment-login"

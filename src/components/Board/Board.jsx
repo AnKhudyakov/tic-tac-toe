@@ -12,9 +12,9 @@ const Board = ({
   room,
   socket,
   setMessages,
-  setCanStart,
   restart,
   setRestart,
+  toggleTheme,
 }) => {
   const [board, setBoard] = useState(cells);
   const [player, setPlayer] = useState("X");
@@ -41,7 +41,6 @@ const Board = ({
     if (messages.type === "X") {
       setPlayer("O");
     }
-    console.log(messages.id);
     messages.id
       ? setBoard((prev) => ({ ...prev, [newMove]: messages.type }))
       : null;
@@ -66,25 +65,32 @@ const Board = ({
     }
   }, [restart]);
 
-  console.log("RESTART",restart);
-  console.log("SET BOARD", board);
-
-  const boardModel = useLoader(GLTFLoader, "./models/board.glb");
+  const boardThemeSecord = useLoader(GLTFLoader, "./models/board_second.glb");
+  const boardThemeFirst = useLoader(GLTFLoader, "./models/board_first.glb");
   const plusModel = useLoader(GLTFLoader, "./models/plus.glb");
   const nullModel = useLoader(GLTFLoader, "./models/null.glb");
-  const emptyModel = useLoader(GLTFLoader, "./models/empty.glb");
+  const emptyFirst = useLoader(GLTFLoader, "./models/empty_first.glb");
+  const emptySecond = useLoader(GLTFLoader, "./models/empty_second.glb");
+
   return (
     <section className="main-section">
       <Typography className="text-center">New game</Typography>
       {!end ? (
-        <Box sx={{ width: "80vw", height: "80vh" }}>
+        <Box sx={{ width: "80vw", height: "80vh", m: "0 auto" }}>
           <Canvas
-            camera={{ position: [0, 1, 0.3], rotation: [-Math.PI / 2.3, 0, 0] }}
+            camera={{ position: [0, 1, 0.5], rotation: [-Math.PI / 2.5, 0, 0] }}
             shadows
           >
-            <directionalLight position={[1.5, 1.5, 1.5]} castShadow />
+            <ambientLight intensity={1} />
+            <directionalLight
+              intensity={0.4}
+              position={[0, 5, -5]}
+              castShadow
+            />
             <primitive
-              object={boardModel.scene}
+              object={
+                toggleTheme ? boardThemeSecord.scene : boardThemeFirst.scene
+              }
               position={[0, 0, 0]}
               children-0-castShadow
             />
@@ -92,46 +98,40 @@ const Board = ({
               <Cell
                 key={position}
                 board={board}
-                emptyModel={emptyModel}
+                emptySecond={emptySecond}
+                emptyFirst={emptyFirst}
+                modelEmpty={
+                  toggleTheme
+                    ? emptySecond.scene.clone(true)
+                    : emptyFirst.scene.clone(true)
+                }
                 nullModel={nullModel}
                 plusModel={plusModel}
                 position={position}
                 coord={`${i}`}
                 handleCellClick={handleCellClick}
+                toggleTheme={toggleTheme}
               />
             ))}
-            {/* <OrbitControls target={[1, 1, 1]} />
-            <axesHelper args={[1]} />*/}
-            {/* <Stats /> */}
           </Canvas>
-
-          {/* <Box sx={{display:"flex"}}> 
-            <Cell handleCellClick={handleCellClick} id={"0"} text={board[0]} />
-            <Cell handleCellClick={handleCellClick} id={"1"} text={board[1]} />
-            <Cell handleCellClick={handleCellClick} id={"2"} text={board[2]} />
-          </Box>
-          <Box sx={{display:"flex"}}>
-            <Cell handleCellClick={handleCellClick} id={"3"} text={board[3]} />
-            <Cell handleCellClick={handleCellClick} id={"4"} text={board[4]} />
-            <Cell handleCellClick={handleCellClick} id={"5"} text={board[5]} />
-          </Box>
-          <Box sx={{display:"flex"}}>
-            <Cell handleCellClick={handleCellClick} id={"6"} text={board[6]} />
-            <Cell handleCellClick={handleCellClick} id={"7"} text={board[7]} />
-            <Cell handleCellClick={handleCellClick} id={"8"} text={board[8]} />
-          </Box> */}
         </Box>
       ) : (
-        <Box>
-          <Box sx={{zIndex: 1,
-          color: "white",
-          position: "relative", }}>
-            Game over! <br /> {end.winner ? `Winner:${end.winner}` : "Tie!"}
-          </Box>
+        <Box
+          sx={{
+            zIndex: 1,
+            color: "white",
+            position: "relative",
+            textAlign: "center",
+            mt: "20%",
+          }}
+        >
+          <Typography sx={{ zIndex: 1, color: "white" }}>
+            Game over! <br /> {end.winner ? `Winner: ${end.winner}` : "Tie!"}
+          </Typography>
           <Button
-            sx={{ bgcolor: "grey", color: "white" }}
+            sx={{ bgcolor: "grey", color: "white", mt: "20px" }}
             onClick={() => {
-              setRestart(restart+1);
+              setRestart(restart + 1);
               setEnd("");
             }}
           >

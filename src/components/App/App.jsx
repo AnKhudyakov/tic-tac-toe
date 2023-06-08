@@ -5,7 +5,7 @@ import Form from "../ui-kit/form/Form";
 import { Box, CardMedia } from "@mui/material";
 import bg from "../../assets/video/bg.mp4";
 import bgSecond from "../../assets/video/bg-second.mp4";
-import {CustomSwitcher} from "../ui-kit/switcher/CustomSwitcher"
+import { CustomSwitcher } from "../ui-kit/switcher/CustomSwitcher";
 
 function App() {
   const [name, setName] = useState("");
@@ -17,16 +17,12 @@ function App() {
   const [restart, setRestart] = useState(false);
   const [canStart, setCanStart] = useState(false);
   const [toggleTheme, setToggleTheme] = useState(true);
-   console.log("MSG", messages);
   const label = { inputProps: { "aria-label": "Color switch demo" } };
-  
+
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
+        m: "0 auto",
         minWidth: "100%",
         minHeight: "100vh",
       }}
@@ -34,7 +30,12 @@ function App() {
       <CustomSwitcher
         {...label}
         color="default"
-        sx={{ zIndex: 1, position: "absolute", bottom: "5%" }}
+        sx={{
+          zIndex: 1,
+          position: "absolute",
+          bottom: "5%",
+          left: "calc(50% - 24px)",
+        }}
         checked={toggleTheme}
         onChange={() => setToggleTheme(!toggleTheme)}
       />
@@ -69,6 +70,7 @@ function App() {
           setCanStart={setCanStart}
           restart={restart}
           setRestart={setRestart}
+          toggleTheme={toggleTheme}
         />
       ) : (
         <Form

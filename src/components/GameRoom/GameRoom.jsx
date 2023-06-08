@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Board from "../Board/Board";
 import { Box, Button, Typography } from "@mui/material";
 const GameRoom = ({
@@ -20,22 +20,33 @@ const GameRoom = ({
     <main>
       <Box
         sx={{
-          minWidth: "300px",
+          maxWidth: "250px",
+          height: "80px",
           zIndex: 1,
           color: "white",
           position: "relative",
+          m: "0 auto",
+          pt: "50px",
           display: "flex",
-          justifyContent: "space-between",
         }}
       >
         <Typography
           sx={{
+            m: "0 auto",
+            pt: "5px",
+            px: "10px",
             width: "100%",
+            borderRadius: "5px",
+            bgcolor: "rgba(4,4,4,0.3)",
+            color: "white",
           }}
         >
-          Your name:{name}
+          Player: {name}
         </Typography>
-        <Button onClick={handleExit} sx={{ bgcolor: "grey", color: "white" }}>
+        <Button
+          onClick={handleExit}
+          sx={{ bgcolor: "grey", color: "white", ml: "-3px" }}
+        >
           Exit
         </Button>
       </Box>
@@ -55,6 +66,7 @@ const GameRoom = ({
             position: "relative",
             py: 4,
             textAlign: "center",
+            mt: "20%",
           }}
         >
           Please wait for your opponent...
