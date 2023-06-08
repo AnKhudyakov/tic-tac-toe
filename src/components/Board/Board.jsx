@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Cell from "../Cell/Cell";
 import { checkWin, checkTie, cells } from "../helpers/gameLogic";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, useMediaQuery } from "@mui/material";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Canvas, useLoader } from "@react-three/fiber";
 import positions from "../helpers/positions";
@@ -20,6 +20,8 @@ const Board = ({
   const [player, setPlayer] = useState("X");
   const [canPlay, setCanPlay] = useState(true);
   const [end, setEnd] = useState("");
+  const isNonMobile = useMediaQuery("(min-width:540px)");
+
   const handleCellClick = (e) => {
     const id = e.eventObject.coord;
     if (board[id] == "" && canPlay) {
@@ -76,7 +78,11 @@ const Board = ({
     <section className="main-section">
       <Typography className="text-center">New game</Typography>
       {!end ? (
-        <Box sx={{ width: "80vw", height: "80vh", m: "0 auto" }}>
+        <Box
+          sx={{ width: "80vw", height: "80vw", maxHeight: "80vh" }}
+          margin={"0 auto"}
+          marginTop={isNonMobile?"0":"18%"}
+        >
           <Canvas
             camera={{ position: [0, 1, 0.5], rotation: [-Math.PI / 2.5, 0, 0] }}
             shadows
