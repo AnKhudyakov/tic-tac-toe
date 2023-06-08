@@ -25,6 +25,7 @@ function App() {
         m: "0 auto",
         minWidth: "100%",
         minHeight: "100vh",
+        color: "white",
       }}
     >
       <CustomSwitcher
@@ -87,7 +88,18 @@ function App() {
           toggleTheme={toggleTheme}
         />
       )}
-      {info && <div>{info}</div>}
+      {info && (
+        <Box
+          sx={{
+            zIndex: 1,
+            position: "absolute",
+            bottom: "20%",
+            left: "calc(50% - 105px)",
+          }}
+        >
+          {info}
+        </Box>
+      )}
     </Box>
   );
 }

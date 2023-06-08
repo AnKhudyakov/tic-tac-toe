@@ -185,7 +185,7 @@ to {
       </FormControl>
       <IconButton
         sx={{
-          width: "100%",
+          width: "100px",
           textAlign: "center",
           animationIterationCount: "infinite",
         }}

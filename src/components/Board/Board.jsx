@@ -81,7 +81,7 @@ const Board = ({
         <Box
           sx={{ width: "80vw", height: "80vw", maxHeight: "80vh" }}
           margin={"0 auto"}
-          marginTop={isNonMobile?"0":"18%"}
+          marginTop={isNonMobile?"0":"15vmin"}
         >
           <Canvas
             camera={{ position: [0, 1, 0.5], rotation: [-Math.PI / 2.5, 0, 0] }}
